@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage[margin=3cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{comment}
+\usepackage{eurosym}
+
+\graphicspath{ {plots/} }
+
+\title{Advanced probabilistic methods - Sketch}
+\author{Christian Segercrantz 481056}
+
+
+\begin{document}
+	\maketitle
+	\pagebreak
+\begin{align}
+	\log(q^*(\tau)) =& \mathbb{E}_{\mathbf{z}, \theta}\left[ \log(p(\mathbf{x},\mathbf{z},\tau, \theta))\right] \\
+	p(\mathbf{x},\mathbf{z},\tau, \theta) =& p(\tau)p(\theta)p(\mathbf{z} \mid \tau)p(\mathbf{x}\mid \mathbf{z}, \theta)\\
+	\log(q^*(\tau)) =& \mathbb{E}_{\mathbf{z}, \theta}\left[ \log(p(\tau)p(\theta)p(\mathbf{z} \mid \tau)p(\mathbf{x}\mid \mathbf{z}, \theta)	)\right] \\
+	\propto & \log(p(\tau)) + \mathbb{E}_{\mathbf{z}}\left[\log(p(\mathbf{z} \mid \tau))\right]\\
+	p(\mathbf{z} \mid \tau) =&  \prod_{n=1}^{N}\tau^{z_{n2}}(1-\tau)^{z_{n1}}\\
+	\log(p(\mathbf{z} \mid \tau)) =& \sum_{n=1}^{N}z_{n2}\log(\tau) + z_{n1}\log(1-\tau)\\
+	\log(q^*(\tau)) =& \log(p(\tau)) + \mathbb{E}_{\mathbf{z}}\left[\sum_{n=1}^{N}\lbrace z_{n2}\log(\tau) + z_{n1}\log(1-\tau)\rbrace\right]\\
+	=& \log(p(\tau)) + \sum_{n=1}^{N}\lbrace \log(\tau)\mathbb{E}_{\mathbf{z}}\left[z_{n2}\right] + \log(1-\tau)\mathbb{E}_{\mathbf{z}}\left[z_{n1}\right] \rbrace\\
+	=& \log(p(\tau)) + \sum_{n=1}^{N}\lbrace \log(\tau)r_{n2} + \log(1-\tau)r_{n1} \rbrace\\
+	=& \log(p(\tau)) + \log(\tau)\sum_{n=1}^{N} r_{n2} + \log(1-\tau)\sum_{n=1}^{N} r_{n1} \\
+	q^*(\tau) =& p(\tau)  \tau ^{ \sum_{n=1}^{N} r_{n2}} (1-\tau)^{\sum_{n=1}^{N} r_{n1}}\\
+	\sum_{n=1}^{N} r_{nk} =& N_k\\
+	p(\tau) =& Beta(\tau \mid \alpha_0, \alpha_0) \\
+	q^*(\tau) =& Beta(\tau \mid \alpha_0, \alpha_0) \cdot \tau ^{ N_2} (1-\tau)^{N_1} \\
+	\tau ^{ N_2} (1-\tau)^{N_1} \propto& Beta(\tau \mid N_2, N_1) \\
+	q^*(\tau) \propto& Beta(\tau \mid \alpha_0, \alpha_0) \cdot Beta(\tau \mid N_2, N_1)\\
+	=& Beta(\tau \mid \alpha_0 + N_2, \alpha_0 + N_1)
+\end{align}
+\end{document}
+
+
+
+
