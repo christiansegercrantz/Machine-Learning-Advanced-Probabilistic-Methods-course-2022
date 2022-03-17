@@ -67,11 +67,35 @@
 	=&	\sum_{n=1}^{N} r_{n1} \left( -\frac{1}{2}x_n^2\right)  +  \sum_{n=1}^{N} r_{n2} \left( -\frac{1}{2}\right)((x_n - m_2)^2  + \beta_2^{-1})
 \end{align}
 
+
+We denote $x_b$ as the number of black pebbles drawn and $x_w$ as the number of white ones. For the first model we thus get
 \begin{align}
-	p(x \mid M_1) =& \int p(x, \theta \mid M_1) d\theta= \int p(x\mid \theta, M_1)p(\theta \mid M_1)d\theta\\
-	p(\theta \mid M_1) =& \text{Beta}(1,1)\\	
-	p(x\mid \theta, M_1) =& \theta^k (1-\theta)^{N-k}, \qquad | k= \text{\#black pebbles} \\
-	p(x \mid M_1) =& \int \theta^k (1-\theta)^{N-k} \text{Beta}(1,1) d\theta
+	x_i \sim& \text{Bin}(x_i \mid n,a) = {n \choose x_i}a^{x_i}(1-a)^{x_i}\\
+	a \sim& \text{Beta}(a \mid 1,1) = 1 \\
+	p(x\mid M_1) =&  \int_0^1 \text{Bin}(x_b \mid n,a)\text{Bin}(x_w \mid n,a)\text{Beta}(a \mid 1,1)\\
+	=& \int_0^1 {n \choose x_b}a^{x_b}(1-a)^{n-x_b}{n \choose x_w}a^{x_w}(1-a)^{n-x_w} da\\
+	=& {n \choose x_b}{n \choose x_w}\int_0^1 a^{x_b+x_w}(1-a)^{2n-x_b-x_w} da \\
+	=& {n \choose x_b}{n \choose x_w}\int_0^1 a^{x_b+x_w-1+1}(1-a)^{x_b+x_w-1+1} da\\
+	=& {n \choose x_b}{n \choose x_w}\text{B}(x_b+x_w+1, 2n - w_b-x_w + 1)
+\end{align}
+
+For the second model we have 
+\begin{align}
+	x_i \sim& \text{Bin}(n,a_i) = {n \choose x_i}a_i^{x_i}(1-a_i)^{n-x_i} \\
+	b \sim& \text{Beta}(1,1)\\
+\end{align}
+We again note $i=b$ for black marbles and $i=w$ for the white ones.
+\begin{align}
+	p(x\mid M_2) =&  \int_0^1\int_0^1 \text{Bin}(x_b \mid n,a_b)\text{Bin}(x_w \mid n,a_w)\text{Beta}(a_b \mid 1,1)\text{Beta}(a_w \mid 1,1)da_bda_w\\
+	=&  \int_0^1\int_0^1 {n \choose x_b}a_b^{x_b}(1-a_b)^{n-x_b}{n \choose x_w}a_w^{x_w}(1-a_w)^{n-x_w}da_bda_w\\
+	=&  {n \choose x_b}{n \choose x_w}\int_0^1a_b^{x_b}(1-a_b)^{n-x_b} da_b\int_0^1 a_w^{x_w}(1-a_w)^{n-x_w}da_w\\
+	=&  {n \choose x_b}{n \choose x_w}\int_0^1a_b^{x_b-1+1}(1-a_b)^{n-x_b-1+1} da_b\int_0^1 a_w^{x_w-1+1}(1-a_w)^{n-x_w-1+1}da_w\\
+	=&  {n \choose x_b}{n \choose x_w}\text{B}(x_b+1,n-x_b+1) \text{B}(x_w+1,n-x_w+1)\\
+\end{align}
+We can now formulate the posterior odds as 
+\begin{align}
+	\frac{p(x\mid M_1)}{p(x\mid M_2)} =& \frac{{n \choose x_b}{n \choose x_w}\text{B}(x_b+x_w+1, 2n - w_b-x_w + 1)}{{n \choose x_b}{n \choose x_w}\text{B}(x_b+1,n-x_b+1) \text{B}(x_w+1,n-x_w+1)}\\
+	=& \frac{\text{B}(x_b+x_w+1, 2n - w_b-x_w + 1)}{\text{B}(x_b+1,n-x_b+1) \text{B}(x_w+1,n-x_w+1)}
 \end{align}
 \end{document}
 
