@@ -21,23 +21,57 @@
 	\maketitle
 	\pagebreak
 \begin{align}
-	\log(q^*(\tau)) =& \mathbb{E}_{\mathbf{z}, \theta}\left[ \log(p(\mathbf{x},\mathbf{z},\tau, \theta))\right] \\
-	p(\mathbf{x},\mathbf{z},\tau, \theta) =& p(\tau)p(\theta)p(\mathbf{z} \mid \tau)p(\mathbf{x}\mid \mathbf{z}, \theta)\\
-	\log(q^*(\tau)) =& \mathbb{E}_{\mathbf{z}, \theta}\left[ \log(p(\tau)p(\theta)p(\mathbf{z} \mid \tau)p(\mathbf{x}\mid \mathbf{z}, \theta)	)\right] \\
-	\propto & \log(p(\tau)) + \mathbb{E}_{\mathbf{z}}\left[\log(p(\mathbf{z} \mid \tau))\right]\\
-	p(\mathbf{z} \mid \tau) =&  \prod_{n=1}^{N}\tau^{z_{n2}}(1-\tau)^{z_{n1}}\\
-	\log(p(\mathbf{z} \mid \tau)) =& \sum_{n=1}^{N}z_{n2}\log(\tau) + z_{n1}\log(1-\tau)\\
-	\log(q^*(\tau)) =& \log(p(\tau)) + \mathbb{E}_{\mathbf{z}}\left[\sum_{n=1}^{N}\lbrace z_{n2}\log(\tau) + z_{n1}\log(1-\tau)\rbrace\right]\\
-	=& \log(p(\tau)) + \sum_{n=1}^{N}\lbrace \log(\tau)\mathbb{E}_{\mathbf{z}}\left[z_{n2}\right] + \log(1-\tau)\mathbb{E}_{\mathbf{z}}\left[z_{n1}\right] \rbrace\\
-	=& \log(p(\tau)) + \sum_{n=1}^{N}\lbrace \log(\tau)r_{n2} + \log(1-\tau)r_{n1} \rbrace\\
-	=& \log(p(\tau)) + \log(\tau)\sum_{n=1}^{N} r_{n2} + \log(1-\tau)\sum_{n=1}^{N} r_{n1} \\
-	q^*(\tau) =& p(\tau)  \tau ^{ \sum_{n=1}^{N} r_{n2}} (1-\tau)^{\sum_{n=1}^{N} r_{n1}}\\
-	\sum_{n=1}^{N} r_{nk} =& N_k\\
-	p(\tau) =& Beta(\tau \mid \alpha_0, \alpha_0) \\
-	q^*(\tau) =& Beta(\tau \mid \alpha_0, \alpha_0) \cdot \tau ^{ N_2} (1-\tau)^{N_1} \\
-	\tau ^{ N_2} (1-\tau)^{N_1} \propto& Beta(\tau \mid N_2, N_1) \\
-	q^*(\tau) \propto& Beta(\tau \mid \alpha_0, \alpha_0) \cdot Beta(\tau \mid N_2, N_1)\\
-	=& Beta(\tau \mid \alpha_0 + N_2, \alpha_0 + N_1)
+	\mathcal{L}(q) =& \mathbb{E}_q [\log p(\mathbf{X}, \mathbf{Z})] - \mathbb{E}_q [\log q(\mathbf{Z})] \\
+	\mathbb{E}_q \log p(\mathbf{X}, \mathbf{Z}) =& \mathbb{E}_q \left[ \log p(\tau) + \log p\theta + \log p(\mathbf{z}\mid \tau) + \log p(\mathbf{x} \mid \mathbf{z} \theta)\right] \\
+	=& \mathbb{E}_{q(\tau)} \left[ \log p(\tau)\right] + \mathbb{E}_{q(\theta)} \left[\log p\theta\right] + \mathbb{E}_{q(\mathbf{z})q(\tau)} \left[\log p(\mathbf{z}\mid \tau)\right] + \mathbb{E}_{q(\mathbf{z})q(\theta)} \left[\log p(\mathbf{x} \mid \mathbf{z}, \theta)\right] \\
+	\mathbb{E}_q [\log q(\mathbf{Z})] =& \mathbb{E}_q \left[-\log q(\mathbf{z}) - \log q(\tau) - \log q(\theta) \right] \\
+	=& - \mathbb{E}_{q(\mathbf{z})} \left[\log q(\mathbf{z})\right]  - \mathbb{E}_{q(\tau)} \left[\log q(\tau)\right]  - \mathbb{E}_{q(\theta)} \left[\log q(\theta) \right] \\
+	\mathcal{L}(q) =& \mathbb{E}_{q(\tau)} \left[ \log p(\tau)\right] + \mathbb{E}_{q(\theta)} \left[\log p(\theta)\right] + \mathbb{E}_{q(\mathbf{z})q(\tau)} \left[\log p(\mathbf{z}\mid \tau)\right] + \mathbb{E}_{q(\mathbf{z})q(\theta)} \left[\log p(\mathbf{x} \mid \mathbf{z}, \theta)\right] \\
+	& - \mathbb{E}_{q(\mathbf{z})} \left[\log q(\mathbf{z})\right]  - \mathbb{E}_{q(\tau)} \left[\log q(\tau)\right]  - \mathbb{E}_{q(\theta)} \left[\log q(\theta) \right]
+\end{align}
+
+\begin{align}
+	p(\theta) =& \mathcal{N}(\theta \mid 0, \beta_0^{-1}) \\
+	\mathbb{E}_{q(\theta)} \left[\log p(\theta)\right] =& \mathbb{E}_{q(\theta)} \left[\log \mathcal{N}(\theta \mid 0, \beta_0^{-1})\right] \\
+	\propto& \mathbb{E}_{q(\theta)} \left[ -\frac{1}{2} \theta^2 \beta_0\right] \\
+	=&  -\frac{1}{2} \mathbb{E}_{q(\theta)} \left[\theta^2\right] \beta_0\\
+	\mathbb{E}_{q(\theta)}\left[\theta^2\right] =& \text{var}(\theta) + \mathbb{E}_{q(\theta)}\left[\theta\right]^2\\
+	=& \beta_2^{-1} + m_2^2 \\
+	\mathbb{E}_{q(\theta)} \left[\log p(\theta)\right] \propto & -\frac{\beta_0}{2}(\beta_2^{-1} + m_2^2) 
+\end{align}
+
+\begin{align}
+	q(\theta) =& \mathcal{N}(\theta \mid m_2, \beta_2^{-1})\\
+	\mathbb{E}_{q(\theta)} \left[\log q(\theta)\right] =& \mathbb{E}_{q(\theta)} \left[\log \mathcal{N}(\theta \mid m_2, \beta_2^{-1})\right] \\
+	\propto & \mathbb{E}_{q(\theta)} \left[-\frac{1}{2} (\theta-m_2)^2 \beta_2\right] \\
+	= & -\frac{1}{2} \mathbb{E}_{q(\theta)} \left[(\theta-m_2)^2\right] \beta_2 \\
+	= & -\frac{1}{2} \mathbb{E}_{q(\theta)} \left[(\theta^2 - 2\theta m_2 +m_2^2\right] \beta_2\\
+	\propto & -\frac{1}{2} \mathbb{E}_{q(\theta)} \left[\theta^2 - 2\theta m_2 \right] \beta_2\\
+	= & -\frac{\beta_2}{2} (\mathbb{E}_{q(\theta)} \left[\theta^2 \right] - \mathbb{E}_{q(\theta)} \left[2\theta m_2 \right]) \\
+	= & -\frac{\beta_2}{2} (\beta_2^{-1} + m_2^2 - 2m_2^2) \\
+	= & -\frac{\beta_2}{2} (\beta_2^{-1} - m_2^2) \\
+	= & \frac{m_2^2 \beta_2}{2} -\frac{1}{2} \\
+\end{align}
+
+\begin{align}
+	p(x \mid z, \theta) =&  \prod_{n=1}^{N} \mathcal{N}(x_n \mid 0, 1) ^{z_{n1}} \mathcal{N}(x_n \mid \theta, 1) ^{z_{n2}} \\
+	E_{q(z)q(\theta)}\left[\log p(x \mid z, \theta)\right] =& E_{q(z)q(\theta)}\left[\sum_{n=1}^{N} {z_{n1}}\log\mathcal{N}(x_n \mid 0, 1) +  \sum_{n=1}^{N} {z_{n2}}\log\mathcal{N}(x_n \mid \theta, 1)\right]\\
+	\propto& E_{q(z)q(\theta)}\left[\sum_{n=1}^{N} {z_{n1}}\left( -\frac{1}{2}x_n^2\right)  +  \sum_{n=1}^{N} {z_{n2}}\left( -\frac{1}{2}\right)(x_n-\theta)^2 \right]\\
+	=& E_{q(z)q(\theta)}\left[\sum_{n=1}^{N} {z_{n1}}\left( -\frac{1}{2}x_n^2\right)  +  \sum_{n=1}^{N} {z_{n2}}\left( -\frac{1}{2}\right)(x_n^2-2x_n\theta + \theta^2) \right] \\
+	=& \sum_{n=1}^{N} E_{q(z)}\left[{z_{n1}}\right] \left( -\frac{1}{2}x_n^2\right)  +  \sum_{n=1}^{N} E_{q(z)}\left[{z_{n2}}\right] \left( -\frac{1}{2}\right)(x_n^2-2x_n E_{q(\theta)}\left[\theta\right]  + E_{q(\theta)}\left[\theta^2\right] ) \\
+	E_{q(z)}\left[{z_{nk}}\right] &= r_{nk} \\
+	E_{q(\theta)}\left[\theta\right]  &= m_2 \\
+	E_{q(\theta)}\left[\theta^2\right]  &= \beta_2^{-1} + m_2^2\\
+	E_{q(z)q(\theta)}\left[\log p(x \mid z, \theta)\right] \propto &
+	\sum_{n=1}^{N} r_{n1} \left( -\frac{1}{2}x_n^2\right)  +  \sum_{n=1}^{N} r_{n2} \left( -\frac{1}{2}\right)(x_n^2-2x_n m_2  + \beta_2^{-1} + m_2^2 )\\
+	=&	\sum_{n=1}^{N} r_{n1} \left( -\frac{1}{2}x_n^2\right)  +  \sum_{n=1}^{N} r_{n2} \left( -\frac{1}{2}\right)((x_n - m_2)^2  + \beta_2^{-1})
+\end{align}
+
+\begin{align}
+	p(x \mid M_1) =& \int p(x, \theta \mid M_1) d\theta= \int p(x\mid \theta, M_1)p(\theta \mid M_1)d\theta\\
+	p(\theta \mid M_1) =& \text{Beta}(1,1)\\	
+	p(x\mid \theta, M_1) =& \theta^k (1-\theta)^{N-k}, \qquad | k= \text{\#black pebbles} \\
+	p(x \mid M_1) =& \int \theta^k (1-\theta)^{N-k} \text{Beta}(1,1) d\theta
 \end{align}
 \end{document}
 
