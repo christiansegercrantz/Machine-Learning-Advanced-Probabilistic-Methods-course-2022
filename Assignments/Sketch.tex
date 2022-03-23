@@ -21,81 +21,23 @@
 	\maketitle
 	\pagebreak
 \begin{align}
-	\mathcal{L}(q) =& \mathbb{E}_q [\log p(\mathbf{X}, \mathbf{Z})] - \mathbb{E}_q [\log q(\mathbf{Z})] \\
-	\mathbb{E}_q \log p(\mathbf{X}, \mathbf{Z}) =& \mathbb{E}_q \left[ \log p(\tau) + \log p\theta + \log p(\mathbf{z}\mid \tau) + \log p(\mathbf{x} \mid \mathbf{z} \theta)\right] \\
-	=& \mathbb{E}_{q(\tau)} \left[ \log p(\tau)\right] + \mathbb{E}_{q(\theta)} \left[\log p\theta\right] + \mathbb{E}_{q(\mathbf{z})q(\tau)} \left[\log p(\mathbf{z}\mid \tau)\right] + \mathbb{E}_{q(\mathbf{z})q(\theta)} \left[\log p(\mathbf{x} \mid \mathbf{z}, \theta)\right] \\
-	\mathbb{E}_q [\log q(\mathbf{Z})] =& \mathbb{E}_q \left[-\log q(\mathbf{z}) - \log q(\tau) - \log q(\theta) \right] \\
-	=& - \mathbb{E}_{q(\mathbf{z})} \left[\log q(\mathbf{z})\right]  - \mathbb{E}_{q(\tau)} \left[\log q(\tau)\right]  - \mathbb{E}_{q(\theta)} \left[\log q(\theta) \right] \\
-	\mathcal{L}(q) =& \mathbb{E}_{q(\tau)} \left[ \log p(\tau)\right] + \mathbb{E}_{q(\theta)} \left[\log p(\theta)\right] + \mathbb{E}_{q(\mathbf{z})q(\tau)} \left[\log p(\mathbf{z}\mid \tau)\right] + \mathbb{E}_{q(\mathbf{z})q(\theta)} \left[\log p(\mathbf{x} \mid \mathbf{z}, \theta)\right] \\
-	& - \mathbb{E}_{q(\mathbf{z})} \left[\log q(\mathbf{z})\right]  - \mathbb{E}_{q(\tau)} \left[\log q(\tau)\right]  - \mathbb{E}_{q(\theta)} \left[\log q(\theta) \right]
-\end{align}
-
-\begin{align}
-	p(\theta) =& \mathcal{N}(\theta \mid 0, \beta_0^{-1}) \\
-	\mathbb{E}_{q(\theta)} \left[\log p(\theta)\right] =& \mathbb{E}_{q(\theta)} \left[\log \mathcal{N}(\theta \mid 0, \beta_0^{-1})\right] \\
-	\propto& \mathbb{E}_{q(\theta)} \left[ -\frac{1}{2} \theta^2 \beta_0\right] \\
-	=&  -\frac{1}{2} \mathbb{E}_{q(\theta)} \left[\theta^2\right] \beta_0\\
-	\mathbb{E}_{q(\theta)}\left[\theta^2\right] =& \text{var}(\theta) + \mathbb{E}_{q(\theta)}\left[\theta\right]^2\\
-	=& \beta_2^{-1} + m_2^2 \\
-	\mathbb{E}_{q(\theta)} \left[\log p(\theta)\right] \propto & -\frac{\beta_0}{2}(\beta_2^{-1} + m_2^2) 
-\end{align}
-
-\begin{align}
-	q(\theta) =& \mathcal{N}(\theta \mid m_2, \beta_2^{-1})\\
-	\mathbb{E}_{q(\theta)} \left[\log q(\theta)\right] =& \mathbb{E}_{q(\theta)} \left[\log \mathcal{N}(\theta \mid m_2, \beta_2^{-1})\right] \\
-	\propto & \mathbb{E}_{q(\theta)} \left[-\frac{1}{2} (\theta-m_2)^2 \beta_2\right] \\
-	= & -\frac{1}{2} \mathbb{E}_{q(\theta)} \left[(\theta-m_2)^2\right] \beta_2 \\
-	= & -\frac{1}{2} \mathbb{E}_{q(\theta)} \left[(\theta^2 - 2\theta m_2 +m_2^2\right] \beta_2\\
-	\propto & -\frac{1}{2} \mathbb{E}_{q(\theta)} \left[\theta^2 - 2\theta m_2 \right] \beta_2\\
-	= & -\frac{\beta_2}{2} (\mathbb{E}_{q(\theta)} \left[\theta^2 \right] - \mathbb{E}_{q(\theta)} \left[2\theta m_2 \right]) \\
-	= & -\frac{\beta_2}{2} (\beta_2^{-1} + m_2^2 - 2m_2^2) \\
-	= & -\frac{\beta_2}{2} (\beta_2^{-1} - m_2^2) \\
-	= & \frac{m_2^2 \beta_2}{2} -\frac{1}{2} \\
-\end{align}
-
-\begin{align}
-	p(x \mid z, \theta) =&  \prod_{n=1}^{N} \mathcal{N}(x_n \mid 0, 1) ^{z_{n1}} \mathcal{N}(x_n \mid \theta, 1) ^{z_{n2}} \\
-	E_{q(z)q(\theta)}\left[\log p(x \mid z, \theta)\right] =& E_{q(z)q(\theta)}\left[\sum_{n=1}^{N} {z_{n1}}\log\mathcal{N}(x_n \mid 0, 1) +  \sum_{n=1}^{N} {z_{n2}}\log\mathcal{N}(x_n \mid \theta, 1)\right]\\
-	\propto& E_{q(z)q(\theta)}\left[\sum_{n=1}^{N} {z_{n1}}\left( -\frac{1}{2}x_n^2\right)  +  \sum_{n=1}^{N} {z_{n2}}\left( -\frac{1}{2}\right)(x_n-\theta)^2 \right]\\
-	=& E_{q(z)q(\theta)}\left[\sum_{n=1}^{N} {z_{n1}}\left( -\frac{1}{2}x_n^2\right)  +  \sum_{n=1}^{N} {z_{n2}}\left( -\frac{1}{2}\right)(x_n^2-2x_n\theta + \theta^2) \right] \\
-	=& \sum_{n=1}^{N} E_{q(z)}\left[{z_{n1}}\right] \left( -\frac{1}{2}x_n^2\right)  +  \sum_{n=1}^{N} E_{q(z)}\left[{z_{n2}}\right] \left( -\frac{1}{2}\right)(x_n^2-2x_n E_{q(\theta)}\left[\theta\right]  + E_{q(\theta)}\left[\theta^2\right] ) \\
-	E_{q(z)}\left[{z_{nk}}\right] &= r_{nk} \\
-	E_{q(\theta)}\left[\theta\right]  &= m_2 \\
-	E_{q(\theta)}\left[\theta^2\right]  &= \beta_2^{-1} + m_2^2\\
-	E_{q(z)q(\theta)}\left[\log p(x \mid z, \theta)\right] \propto &
-	\sum_{n=1}^{N} r_{n1} \left( -\frac{1}{2}x_n^2\right)  +  \sum_{n=1}^{N} r_{n2} \left( -\frac{1}{2}\right)(x_n^2-2x_n m_2  + \beta_2^{-1} + m_2^2 )\\
-	=&	\sum_{n=1}^{N} r_{n1} \left( -\frac{1}{2}x_n^2\right)  +  \sum_{n=1}^{N} r_{n2} \left( -\frac{1}{2}\right)((x_n - m_2)^2  + \beta_2^{-1})
-\end{align}
-
-
-We denote $x_b$ as the number of black pebbles drawn and $x_w$ as the number of white ones. For the first model we thus get
-\begin{align}
-	x_i \sim& \text{Bin}(x_i \mid n,a) = {n \choose x_i}a^{x_i}(1-a)^{x_i}\\
-	a \sim& \text{Beta}(a \mid 1,1) = 1 \\
-	p(x\mid M_1) =&  \int_0^1 \text{Bin}(x_b \mid n,a)\text{Bin}(x_w \mid n,a)\text{Beta}(a \mid 1,1)\\
-	=& \int_0^1 {n \choose x_b}a^{x_b}(1-a)^{n-x_b}{n \choose x_w}a^{x_w}(1-a)^{n-x_w} da\\
-	=& {n \choose x_b}{n \choose x_w}\int_0^1 a^{x_b+x_w}(1-a)^{2n-x_b-x_w} da \\
-	=& {n \choose x_b}{n \choose x_w}\int_0^1 a^{x_b+x_w-1+1}(1-a)^{x_b+x_w-1+1} da\\
-	=& {n \choose x_b}{n \choose x_w}\text{B}(x_b+x_w+1, 2n - w_b-x_w + 1)
-\end{align}
-
-For the second model we have 
-\begin{align}
-	x_i \sim& \text{Bin}(n,a_i) = {n \choose x_i}a_i^{x_i}(1-a_i)^{n-x_i} \\
-	b \sim& \text{Beta}(1,1)\\
-\end{align}
-We again note $i=b$ for black marbles and $i=w$ for the white ones.
-\begin{align}
-	p(x\mid M_2) =&  \int_0^1\int_0^1 \text{Bin}(x_b \mid n,a_b)\text{Bin}(x_w \mid n,a_w)\text{Beta}(a_b \mid 1,1)\text{Beta}(a_w \mid 1,1)da_bda_w\\
-	=&  \int_0^1\int_0^1 {n \choose x_b}a_b^{x_b}(1-a_b)^{n-x_b}{n \choose x_w}a_w^{x_w}(1-a_w)^{n-x_w}da_bda_w\\
-	=&  {n \choose x_b}{n \choose x_w}\int_0^1a_b^{x_b}(1-a_b)^{n-x_b} da_b\int_0^1 a_w^{x_w}(1-a_w)^{n-x_w}da_w\\
-	=&  {n \choose x_b}{n \choose x_w}\int_0^1a_b^{x_b-1+1}(1-a_b)^{n-x_b-1+1} da_b\int_0^1 a_w^{x_w-1+1}(1-a_w)^{n-x_w-1+1}da_w\\
-	=&  {n \choose x_b}{n \choose x_w}\text{B}(x_b+1,n-x_b+1) \text{B}(x_w+1,n-x_w+1)\\
-\end{align}
-We can now formulate the posterior odds as 
-\begin{align}
-	\frac{p(x\mid M_1)}{p(x\mid M_2)} =& \frac{{n \choose x_b}{n \choose x_w}\text{B}(x_b+x_w+1, 2n - w_b-x_w + 1)}{{n \choose x_b}{n \choose x_w}\text{B}(x_b+1,n-x_b+1) \text{B}(x_w+1,n-x_w+1)}\\
-	=& \frac{\text{B}(x_b+x_w+1, 2n - w_b-x_w + 1)}{\text{B}(x_b+1,n-x_b+1) \text{B}(x_w+1,n-x_w+1)}
+	p(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X}) =& p(\mathbf{X} \mid \psi, \mathbf{Z}, \mathbf{W})p(\psi)p(\mathbf{Z})p(\mathbf{W}) \\
+	=&\mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
+	(\mathbf{\psi})^{-1}) \prod_{d=1}^{D}q(\mathbf{w}_{d})\prod_{n=1}^{N}q(\mathbf{z}_{n})\prod_{d=1}^{D}q(\psi_{d})\\
+	=& \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
+	(\mathbf{\psi})^{-1}) \mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I}) \mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I}) \text{Gamma}(\psi_d \mid a,b) \\
+	\log p(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X}) =& \log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
+	(\mathbf{\psi})^{-1})\right) +  \log\left(\mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I})\right) 
+	\\+&  \log\left(\mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I})\right) +\log\left( \text{Gamma}(\psi_d \mid a,b)\right) \\
+	\log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
+	(\mathbf{\psi})^{-1})\right) \propto& -\frac{1}{2}(\mathbf{x_n} -\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}(\mathbf{x_n} -\mathbf{Wz}_{n}) \\
+	\log\left( \mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I})\right)  \propto& -\frac{1}{2} \mathbf{z_n}^\top\mathbf{z_n} \\
+	\log p(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X}) \propto&   -\frac{1}{2}(\mathbf{x_n} -\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}(\mathbf{x_n} -\mathbf{Wz}_{n}) - \frac{1}{2} \mathbf{z_n}^\top\mathbf{z_n}\\
+	=& - \frac{1}{2} ( \mathbf{z_n}^\top\mathbf{z_n} +\mathbf{x_n}^\top \mathbf{\text{diag}(\psi)} \mathbf{x_n} - \mathbf{x_n}^\top \mathbf{\text{diag}(\psi)}\mathbf{Wz}_{n}\\
+	&-(\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}\mathbf{x_n} + (\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}\mathbf{Wz}_{n}) \\
+	\propto& - \frac{1}{2} ( \mathbf{z_n}^\top\mathbf{z_n} - 2\mathbf{x_n}^\top \mathbf{\text{diag}(\psi)}\mathbf{Wz}_{n} + \mathbf{z}_n^\top \mathbf{W}^\top\mathbf{\text{diag}(\psi)}\mathbf{Wz}_{n})\\
+	=& - \frac{1}{2} \mathbf{z_n}^\top(\underbrace{\mathbf{I + \mathbf{W}^\top\mathbf{\text{diag}(\psi)}\mathbf{W}}}_{A})\mathbf{z_n} +\underbrace{\mathbf{x_n}^\top \mathbf{\text{diag}(\psi)}\mathbf{W}}_ {b^\top}\mathbf{z}_{n}, \quad | \text{Completing the square} \\
+	=& \frac{1}{2}(\mathbf{z_n} - A^{-1}b)^\top A (\mathbf{z_n} - A^{-1}b) - \frac{1}{2}b^\top A^{-1}b
 \end{align}
 \end{document}
 
