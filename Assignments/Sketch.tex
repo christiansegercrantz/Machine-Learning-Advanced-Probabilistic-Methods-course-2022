@@ -53,9 +53,9 @@
 \end{align}
 
 \begin{align}
-	\mathbb{E}_{\psi, \mathbf{z}}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right]  =&\mathbb{E}_{\psi, \mathbf{z}}[ \log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
+	\mathbb{E}_{\psi, \mathbf{z}}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right]  =&\mathbb{E}_{\psi, \mathbf{z}}[ \log\left(\prod_{n=1}^{N} \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
 	(\mathbf{\psi})^{-1})\right) +  \log\left(\mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I})\right) \\+&  \log\left(\mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I})\right) +\log\left( \text{Gamma}(\psi_d \mid a,b)\right)]\\
-	\propto&\mathbb{E}_{\psi, \mathbf{z}}[ \log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
+	\propto&\mathbb{E}_{\psi, \mathbf{z}}[\sum_{n=1}^{N} \log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
 	(\mathbf{\psi})^{-1})\right) +  \log\left(\mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I})\right)] \\
 	\log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
 	(\mathbf{\psi})^{-1})\right) \propto& -\frac{1}{2}(\mathbf{x_n} -\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}(\mathbf{x_n} -\mathbf{Wz}_{n}) \\
