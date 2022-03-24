@@ -23,26 +23,45 @@
 \begin{align}
 	p(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X}) =& p(\mathbf{X} \mid \psi, \mathbf{Z}, \mathbf{W})p(\psi)p(\mathbf{Z})p(\mathbf{W}) \\
 	=&\mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
-	(\mathbf{\psi})^{-1}) \prod_{d=1}^{D}q(\mathbf{w}_{d})\prod_{n=1}^{N}q(\mathbf{z}_{n})\prod_{d=1}^{D}q(\psi_{d})\\
+	(\mathbf{\psi})^{-1}) \prod_{d=1}^{D}q^*(\mathbf{w}_{d})\prod_{n=1}^{N}q^*(\mathbf{z}_{n})\prod_{d=1}^{D}q^*(\psi_{d})\\
 	=& \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
 	(\mathbf{\psi})^{-1}) \mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I}) \mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I}) \text{Gamma}(\psi_d \mid a,b) \\
-	\mathbb{E}_{\psi, w}\left[ \log p(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right]  =&\mathbb{E}_{\psi, w}[ \log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
+	\mathbb{E}_{\psi, w}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right]  =&\mathbb{E}_{\psi, w}[ \log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
 	(\mathbf{\psi})^{-1})\right) +  \log\left(\mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I})\right) 
 	\\+&  \log\left(\mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I})\right) +\log\left( \text{Gamma}(\psi_d \mid a,b)\right)]  \\
 	\log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
 	(\mathbf{\psi})^{-1})\right) \propto& -\frac{1}{2}(\mathbf{x_n} -\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}(\mathbf{x_n} -\mathbf{Wz}_{n}) \\
 	\log\left( \mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I})\right)  \propto& -\frac{1}{2} \mathbf{z_n}^\top\mathbf{z_n} \\
-	\mathbb{E}_{\psi, w}\left[\log p(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right]  \propto& \mathbb{E}_{\psi, w}\left[  -\frac{1}{2}(\mathbf{x_n} -\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}(\mathbf{x_n} -\mathbf{Wz}_{n}) - \frac{1}{2} \mathbf{z_n}^\top\mathbf{z_n}\right] \\
+	\mathbb{E}_{\psi, w}\left[\log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right]  \propto& \mathbb{E}_{\psi, w}\left[  -\frac{1}{2}(\mathbf{x_n} -\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}(\mathbf{x_n} -\mathbf{Wz}_{n}) - \frac{1}{2} \mathbf{z_n}^\top\mathbf{z_n}\right] \\
 	=& \mathbb{E}_{\psi, w}[- \frac{1}{2} ( \mathbf{z_n}^\top\mathbf{z_n} +\mathbf{x_n}^\top \mathbf{\text{diag}(\psi)} \mathbf{x_n} - \mathbf{x_n}^\top \mathbf{\text{diag}(\psi)}\mathbf{Wz}_{n} \\
 	&-(\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}\mathbf{x_n} + (\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}\mathbf{Wz}_{n})] \\
 	\propto&\mathbb{E}_{\psi, w}\left[ - \frac{1}{2} ( \mathbf{z_n}^\top\mathbf{z_n} - 2\mathbf{x_n}^\top \mathbf{\text{diag}(\psi)}\mathbf{Wz}_{n} + \mathbf{z}_n^\top \mathbf{W}^\top\mathbf{\text{diag}(\psi)}\mathbf{Wz}_{n})\right] \\
 	=& \mathbb{E}_{\psi, w}\left[- \frac{1}{2} \mathbf{z_n}^\top(\underbrace{\mathbf{I + \mathbf{W}^\top\mathbf{\text{diag}(\psi)}\mathbf{W}}}_{A})\mathbf{z_n} +\underbrace{\mathbf{x_n}^\top \mathbf{\text{diag}(\psi)}\mathbf{W}}_ {b^\top}\mathbf{z}_{n}\right] , \quad | \text{Completing the square} \\
 	=& \mathbb{E}_{\psi, w}\left[\frac{1}{2}(\mathbf{z_n} - A^{-1}b)^\top A (\mathbf{z_n} - A^{-1}b) - \frac{1}{2}b^\top A^{-1}b\right]  \\
 	=& \frac{1}{2}(\mathbf{z_n} - \mathbb{E}_{\psi, w}[A^{-1}b])^\top \mathbb{E}_{\psi, w}[A] (\mathbf{z_n} - \mathbb{E}_{\psi, w}[A^{-1}b]) - \frac{1}{2}\mathbb{E}_{\psi, w}[b^\top A^{-1}b]\\
-	\mathbf{K}_n =& A^{-1}, \qquad A^{-1} = \left( \mathbf{I + \underbrace{\mathbf{W}^\top}_{K \times D}\underbrace{\mathbf{\text{diag}(\psi)}}_{D\times D}\underbrace{\mathbf{W}}_{D\times K}}\right) ^{-1} =\left( \mathbf{I +\sum_{d=1}^{D}\psi_{d}\mathbf{w}_d\mathbf{w}_d^\top}\right)^{-1} \\
-	\mu_n =& A^{-1}b, \qquad b = \mathbf{W}^\top\mathbf{\text{diag}(\psi)}\mathbf{x}_n
+	\propto& \frac{1}{2}(\mathbf{z_n} - \mathbb{E}_{\psi, w}[A^{-1}b])^\top \mathbb{E}_{\psi, w}[A] (\mathbf{z_n} - \mathbb{E}_{\psi, w}[A^{-1}b])\\
+	A^{-1} =& \left( \mathbf{I + \underbrace{\mathbf{W}^\top}_{K \times D}\underbrace{\mathbf{\text{diag}(\psi)}}_{D\times D}\underbrace{\mathbf{W}}_{D\times K}}\right) ^{-1} =\left( \mathbf{I +\sum_{d=1}^{D}\psi_{d}\mathbf{w}_d\mathbf{w}_d^\top}\right)^{-1} \\
+	b =& \mathbf{W}^\top\mathbf{\text{diag}(\psi)}\mathbf{x}_n\\
+	\mathbb{E}_{\psi,\mathbf{w}}[\mu_n] =& \mathbb{E}_{\psi,\mathbf{w}}[A^{-1} b] = \mathbb{E}_{\psi,\mathbf{w}}[A^{-1}] \mathbb{E}_{\psi,\mathbf{w}}[b] \\
+	\mathbb{E}_{\psi,\mathbf{w}}[A^{-1}]=& \mathbb{E}_{\psi,\mathbf{w}}\left[  \mathbf{I +\sum_{d=1}^{D}\psi_{d}\mathbf{w}_d\mathbf{w}_d^\top}\right]^{-1}\\
+	=& \left( \mathbf{I +\sum_{d=1}^{D}\mathbb{E}_{\psi}[\psi_{d}]\mathbb{E}_{\mathbf{w}}[\mathbf{w}_d\mathbf{w}_d^\top]}\right) ^{-1} = \left( \mathbf{I +\sum_{d=1}^{D}\left\langle \psi_{d}\right\rangle \left\langle \mathbf{w}_d\mathbf{w}_d^\top\right\rangle }\right)^{-1}\\
+	\mathbb{E}_{\psi,\mathbf{w}}[b] =& \mathbb{E}_{\psi,\mathbf{w}}\left[ \mathbf{W}^\top\mathbf{\text{diag}(\psi)}\mathbf{x}\right] \\
+	=& \mathbb{E}_{\mathbf{w}} [\mathbf{W}^\top]\mathbb{E}_{\psi}[\mathbf{\text{diag}(\psi)}]\mathbf{x}\\
+	=& \left\langle \mathbf{W}^\top\right\rangle \text{diag}\left\langle\psi\right\rangle \mathbf{x}\\
+	\mathbb{E}_{\psi, w}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right] \propto& \frac{1}{2}(\mathbf{z_n} - \underbrace{\mathbb{E}_{\psi, w}[A^{-1}]\mathbb{E}_{\psi, w}[b]}_{\mu_n})^\top \underbrace{\mathbb{E}_{\psi, w}[A^{-1}]^{-1}]}_{\mathbf{K}_n} (\mathbf{z_n} - \underbrace{\mathbb{E}_{\psi, w}[A^{-1}]\mathbb{E}_{\psi, w}[ b]}_{\mu_n})\\
+	\mathbb{E}_{\psi, w}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right]\propto& \mathcal{N}(\mu_n, \mathbf{K}_n)
 \end{align}
 
+\begin{align}
+	\mathbb{E}_{\psi, \mathbf{z}}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right]  =&\mathbb{E}_{\psi, \mathbf{z}}[ \log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
+	(\mathbf{\psi})^{-1})\right) +  \log\left(\mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I})\right) \\+&  \log\left(\mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I})\right) +\log\left( \text{Gamma}(\psi_d \mid a,b)\right)]\\
+	\propto&\mathbb{E}_{\psi, \mathbf{z}}[ \log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
+	(\mathbf{\psi})^{-1})\right) +  \log\left(\mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I})\right)] \\
+	\log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
+	(\mathbf{\psi})^{-1})\right) \propto& -\frac{1}{2}(\mathbf{x_n} -\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}(\mathbf{x_n} -\mathbf{Wz}_{n}) \\
+	\log\left( \mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I})\right)  \propto& -\frac{1}{2} \mathbf{w_d}^\top(\alpha\mathbf{I})\mathbf{w_d} \\
+	\mathbb{E}_{\psi, \mathbf{z}}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right] \propto& \mathbb{E}_{\psi, \mathbf{z}}\left[-\frac{1}{2}(\mathbf{x_n} -\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}(\mathbf{x_n} -\mathbf{Wz}_{n})-\frac{1}{2} \mathbf{w_d}^\top(\alpha\mathbf{I})\mathbf{w_d} \right] 
+\end{align}
 \end{document}
 
 
