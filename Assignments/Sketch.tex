@@ -53,14 +53,23 @@
 \end{align}
 
 \begin{align}
-	\mathbb{E}_{\psi, \mathbf{z}}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right]  =&\mathbb{E}_{\psi, \mathbf{z}}[ \log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
-	(\mathbf{\psi})^{-1})\right) +  \log\left(\mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I})\right) \\+&  \log\left(\mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I})\right) +\log\left( \text{Gamma}(\psi_d \mid a,b)\right)]\\
-	\propto&\mathbb{E}_{\psi, \mathbf{z}}[ \log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
-	(\mathbf{\psi})^{-1})\right) +  \log\left(\mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I})\right)] \\
-	\log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
-	(\mathbf{\psi})^{-1})\right) \propto& -\frac{1}{2}(\mathbf{x_n} -\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}(\mathbf{x_n} -\mathbf{Wz}_{n}) \\
-	\log\left( \mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I})\right)  \propto& -\frac{1}{2} \mathbf{w_d}^\top(\alpha\mathbf{I})\mathbf{w_d} \\
-	\mathbb{E}_{\psi, \mathbf{z}}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right] \propto& \mathbb{E}_{\psi, \mathbf{z}}\left[-\frac{1}{2}(\mathbf{x_n} -\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}(\mathbf{x_n} -\mathbf{Wz}_{n})-\frac{1}{2} \mathbf{w_d}^\top(\alpha\mathbf{I})\mathbf{w_d} \right] 
+	\mathbb{E}_{\psi, \mathbf{z}}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right] 
+	=& \mathbb{E}_{\psi, \mathbf{z}}[p(\mathbf{W})p(\mathbf{X}\mid\mathbf{Z},\mathbf{W},\mathbf{\Psi})p(\mathbf{Z})p(\mathbf{\Psi})]\\
+	\propto&\mathbb{E}_{\psi, \mathbf{z}}[p(\mathbf{W})p(\mathbf{X}\mid\mathbf{Z},\mathbf{W},\mathbf{\Psi})] \\
+	\propto&\mathbb{E}_{\psi, \mathbf{z}}[ \sum_{n=1}^{N}\log\left( \mathcal{N}(\mathbf{x}_{nd} \mid \mathbf{w}_d^\top \mathbf{z}_{n},\mathbf{\psi}_d^{-1})\right) +  \log\left(\mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I})\right)] \\
+	\log\left( \mathcal{N}(\mathbf{x}_{nd} \mid \mathbf{w}_d^\top \mathbf{z}_{n},\mathbf{\psi}_d^{-1})\right) \propto& -\frac{1}{2}(\mathbf{x}_{nd} -\mathbf{w}_d^\top\mathbf{z}_{n})^\top\mathbf{\psi_d}(\mathbf{x}_{nd} -\mathbf{w}_d^\top\mathbf{z}_{n}) \\
+	\log\left( \mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I})\right)  \propto& -\frac{1}{2} \mathbf{w_d}^\top(\alpha^{-1}\mathbf{I})\mathbf{w_d} \\
+	\mathbb{E}_{\psi, \mathbf{z}}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right] \propto& \mathbb{E}_{\psi, \mathbf{z}}\left[\sum_{n=1}^{N}\left(-\frac{1}{2}(\mathbf{x}_{nd}-\mathbf{w}_d^\top\mathbf{z}_{n})^\top\mathbf{\psi_d}(\mathbf{x}_{nd} -\mathbf{w}_d^\top\mathbf{z}_{n})\right)-\frac{1}{2} \mathbf{w_d}^\top(\alpha^{-1}\mathbf{I})\mathbf{w_d} \right] \\
+	\propto& \mathbb{E}_{\psi, \mathbf{z}}\left[\sum_{n=1}^{N}\left(-\frac{\psi_d}{2}(\mathbf{x}_{nd}^2-2\mathbf{x}_{nd}\mathbf{w}_d^\top\mathbf{z}_{n}+\mathbf{w}_d^\top\mathbf{z}_{n}\mathbf{z}_{n}^\top\mathbf{w}_d)\right)-\frac{1}{2} \mathbf{w_d}^\top(\alpha^{-1}\mathbf{I})\mathbf{w_d} \right] \\
+	\propto& \mathbb{E}_{\psi, \mathbf{z}}\left[\sum_{n=1}^{N}\left(\psi_d\mathbf{x}_{nd}\mathbf{w}_d^\top\mathbf{z}_{n}-\frac{\psi_d}{2}\mathbf{w}_d^\top\mathbf{z}_{n}\mathbf{z}_{n}^\top\mathbf{w}_d\right)-\frac{1}{2} \mathbf{w_d}^\top(\alpha^{-1}\mathbf{I})\mathbf{w_d} \right] \\
+	\propto& \mathbb{E}_{\psi, \mathbf{z}}\left[\psi_d\mathbf{w}_d^\top\sum_{n=1}^{N}\mathbf{x}_{nd}\mathbf{z}_{n}-\frac{\psi_d}{2}\mathbf{w}_d^\top\sum_{n=1}^{N}\left( \mathbf{z}_{n}\mathbf{z}_{n}^\top\right) \mathbf{w}_d-\frac{1}{2} \mathbf{w_d}^\top(\alpha^{-1}\mathbf{I})\mathbf{w_d} \right] \\
+	\propto& \mathbb{E}_{\psi, \mathbf{z}}\left[\psi_d\mathbf{w}_d^\top\sum_{n=1}^{N}\mathbf{x}_{nd}\mathbf{z}_{n}-\frac{1}{2}\mathbf{w}_d^\top\left( \psi_d\sum_{n=1}^{N}\left( \mathbf{z}_{n}\mathbf{z}_{n}^\top\right)  + \alpha^{-1}\mathbf{I}\right) \mathbf{w_d} \right] \\
+	\propto& \mathbb{E}_{\psi}[\psi_d]\sum_{n=1}^{N}(\mathbf{x}_{nd}\mathbb{E}_{\mathbf{z}}[\mathbf{z}_{n}^\top])\mathbf{w}_d-\frac{1}{2}\mathbf{w}_d^\top\left(\mathbb{E}_{\psi} [\psi_d]\sum_{n=1}^{N} \mathbb{E}_{\mathbf{z}}[\mathbf{z}_{n}\mathbf{z}_{n}^\top]+ \alpha^{-1}\mathbf{I}\right) \mathbf{w_d} \\
+	\propto& \underbrace{\left\langle \psi_d\right\rangle \sum_{n=1}^{N}(\mathbf{x}_{nd}\left\langle \mathbf{z}_{n}^\top\right\rangle )}_{\mathbf{b}^\top}\mathbf{w}_d-\frac{1}{2}\mathbf{w}_d^\top\underbrace{\left( \left\langle \psi_d\right\rangle \sum_{n=1}^{N} \left\langle \mathbf{z}_{n}\mathbf{z}_{n}^\top\right\rangle + \alpha^{-1}\mathbf{I}\right)}_{\mathbf{A}} \mathbf{w_d} \\
+	& \text{Complete the square}\\\
+	\propto & -\frac{1}{2}\left( \mathbf{w_d} - \mathbf{A}^{-1}\mathbf{b}\right) ^\top \mathbf{A}\left( \mathbf{w_d} - \mathbf{A}^{-1}\mathbf{b}\right)\\
+	\text{So we can conclude that}\\
+	\propto& \mathcal{N}_K(\mathbf{w_d} \mid \mathbf{A}^{-1}\mathbf{b}, \mathbf{A}^{-1})\\
 \end{align}
 \end{document}
 
