@@ -21,55 +21,28 @@
 	\maketitle
 	\pagebreak
 \begin{align}
-	p(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X}) =& p(\mathbf{X} \mid \psi, \mathbf{Z}, \mathbf{W})p(\psi)p(\mathbf{Z})p(\mathbf{W}) \\
-	=&\mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
-	(\mathbf{\psi})^{-1}) \prod_{d=1}^{D}q^*(\mathbf{w}_{d})\prod_{n=1}^{N}q^*(\mathbf{z}_{n})\prod_{d=1}^{D}q^*(\psi_{d})\\
-	=& \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
-	(\mathbf{\psi})^{-1}) \mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I}) \mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I}) \text{Gamma}(\psi_d \mid a,b) \\
-	\mathbb{E}_{\psi, w}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right]  =&\mathbb{E}_{\psi, w}[ \log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
-	(\mathbf{\psi})^{-1})\right) +  \log\left(\mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I})\right) 
-	\\+&  \log\left(\mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I})\right) +\log\left( \text{Gamma}(\psi_d \mid a,b)\right)]  \\
-	\log\left( \mathcal{N}_{D}(\mathbf{x}_n \mid \mathbf{Wz}_{n},\text{diag}
-	(\mathbf{\psi})^{-1})\right) \propto& -\frac{1}{2}(\mathbf{x_n} -\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}(\mathbf{x_n} -\mathbf{Wz}_{n}) \\
-	\log\left( \mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I})\right)  \propto& -\frac{1}{2} \mathbf{z_n}^\top\mathbf{z_n} \\
-	\mathbb{E}_{\psi, w}\left[\log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right]  \propto& \mathbb{E}_{\psi, w}\left[  -\frac{1}{2}(\mathbf{x_n} -\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}(\mathbf{x_n} -\mathbf{Wz}_{n}) - \frac{1}{2} \mathbf{z_n}^\top\mathbf{z_n}\right] \\
-	=& \mathbb{E}_{\psi, w}[- \frac{1}{2} ( \mathbf{z_n}^\top\mathbf{z_n} +\mathbf{x_n}^\top \mathbf{\text{diag}(\psi)} \mathbf{x_n} - \mathbf{x_n}^\top \mathbf{\text{diag}(\psi)}\mathbf{Wz}_{n} \\
-	&-(\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}\mathbf{x_n} + (\mathbf{Wz}_{n})^\top\mathbf{\text{diag}(\psi)}\mathbf{Wz}_{n})] \\
-	\propto&\mathbb{E}_{\psi, w}\left[ - \frac{1}{2} ( \mathbf{z_n}^\top\mathbf{z_n} - 2\mathbf{x_n}^\top \mathbf{\text{diag}(\psi)}\mathbf{Wz}_{n} + \mathbf{z}_n^\top \mathbf{W}^\top\mathbf{\text{diag}(\psi)}\mathbf{Wz}_{n})\right] \\
-	=& \mathbb{E}_{\psi, w}\left[- \frac{1}{2} \mathbf{z_n}^\top(\underbrace{\mathbf{I + \mathbf{W}^\top\mathbf{\text{diag}(\psi)}\mathbf{W}}}_{A})\mathbf{z_n} +\underbrace{\mathbf{x_n}^\top \mathbf{\text{diag}(\psi)}\mathbf{W}}_ {b^\top}\mathbf{z}_{n}\right] , \quad | \text{Completing the square} \\
-	=& \mathbb{E}_{\psi, w}\left[\frac{1}{2}(\mathbf{z_n} - A^{-1}b)^\top A (\mathbf{z_n} - A^{-1}b) - \frac{1}{2}b^\top A^{-1}b\right]  \\
-	=& \frac{1}{2}(\mathbf{z_n} - \mathbb{E}_{\psi, w}[A^{-1}b])^\top \mathbb{E}_{\psi, w}[A] (\mathbf{z_n} - \mathbb{E}_{\psi, w}[A^{-1}b]) - \frac{1}{2}\mathbb{E}_{\psi, w}[b^\top A^{-1}b]\\
-	\propto& \frac{1}{2}(\mathbf{z_n} - \mathbb{E}_{\psi, w}[A^{-1}b])^\top \mathbb{E}_{\psi, w}[A] (\mathbf{z_n} - \mathbb{E}_{\psi, w}[A^{-1}b])\\
-	A^{-1} =& \left( \mathbf{I + \underbrace{\mathbf{W}^\top}_{K \times D}\underbrace{\mathbf{\text{diag}(\psi)}}_{D\times D}\underbrace{\mathbf{W}}_{D\times K}}\right) ^{-1} =\left( \mathbf{I +\sum_{d=1}^{D}\psi_{d}\mathbf{w}_d\mathbf{w}_d^\top}\right)^{-1} \\
-	b =& \mathbf{W}^\top\mathbf{\text{diag}(\psi)}\mathbf{x}_n\\
-	\mathbb{E}_{\psi,\mathbf{w}}[\mu_n] =& \mathbb{E}_{\psi,\mathbf{w}}[A^{-1} b] = \mathbb{E}_{\psi,\mathbf{w}}[A^{-1}] \mathbb{E}_{\psi,\mathbf{w}}[b] \\
-	\mathbb{E}_{\psi,\mathbf{w}}[A^{-1}]=& \mathbb{E}_{\psi,\mathbf{w}}\left[  \mathbf{I +\sum_{d=1}^{D}\psi_{d}\mathbf{w}_d\mathbf{w}_d^\top}\right]^{-1}\\
-	=& \left( \mathbf{I +\sum_{d=1}^{D}\mathbb{E}_{\psi}[\psi_{d}]\mathbb{E}_{\mathbf{w}}[\mathbf{w}_d\mathbf{w}_d^\top]}\right) ^{-1} = \left( \mathbf{I +\sum_{d=1}^{D}\left\langle \psi_{d}\right\rangle \left\langle \mathbf{w}_d\mathbf{w}_d^\top\right\rangle }\right)^{-1}\\
-	\mathbb{E}_{\psi,\mathbf{w}}[b] =& \mathbb{E}_{\psi,\mathbf{w}}\left[ \mathbf{W}^\top\mathbf{\text{diag}(\psi)}\mathbf{x}\right] \\
-	=& \mathbb{E}_{\mathbf{w}} [\mathbf{W}^\top]\mathbb{E}_{\psi}[\mathbf{\text{diag}(\psi)}]\mathbf{x}\\
-	=& \left\langle \mathbf{W}^\top\right\rangle \text{diag}\left\langle\psi\right\rangle \mathbf{x}\\
-	\mathbb{E}_{\psi, w}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right] \propto& \frac{1}{2}(\mathbf{z_n} - \underbrace{\mathbb{E}_{\psi, w}[A^{-1}]\mathbb{E}_{\psi, w}[b]}_{\mu_n})^\top \underbrace{\mathbb{E}_{\psi, w}[A^{-1}]^{-1}]}_{\mathbf{K}_n} (\mathbf{z_n} - \underbrace{\mathbb{E}_{\psi, w}[A^{-1}]\mathbb{E}_{\psi, w}[ b]}_{\mu_n})\\
-	\mathbb{E}_{\psi, w}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right]\propto& \mathcal{N}(\mu_n, \mathbf{K}_n)
+	-\log p(\mathcal{D}\mid \mathbf{W}) =& -\log\prod_{i=0}^1 \mathcal{N}(y_i\mid w_0 + w_1x_i, \sigma_l^2) \\
+	=& \sum_{i=0}^N-\log \mathcal{N}(y_i\mid w_0 + w_1x_i, \sigma_l^2)\\
+	-\log \mathcal{N}(y_i\mid w_0 + w_1x_i, \sigma_l^2) =& -\log\frac{1}{\sigma_l \sqrt{2\pi}} +\frac{1}{2\sigma_l^2}(y_i -w_0-w_1x_i)^2\\
+	=& \log\sigma_l \sqrt{2\pi} +\frac{1}{2\sigma_l^2}(y_i -w_0-w_1x_i)^2\\
+	-\log p(\mathcal{D}\mid \mathbf{W}) =& \sum_{i=0}^N\log\sigma_l \sqrt{2\pi} +\frac{1}{2\sigma_l^2}\sum_{i=0}^N(y_i -w_0-w_1x_i)^2 \\
+	=& N\log\sigma_l \sqrt{2\pi} +\frac{1}{2\sigma_l^2}\sum_{i=0}^N(y_i -w_0-w_1x_i)^2, \qquad \log \sigma_l\sqrt{2\pi} \approx 0.001\\
+	\approx & \frac{1}{2\sigma_l^2}\sum_{i=0}^N(y_i -w_0-w_1x_i)^2 
 \end{align}
 
+Since the prior $p(\mathbf{w})$ is a MVN with diagonal covariance and that the mean-field approximation of the posterior $q(\mathbf{w})$ is product of gaussians we can write the KL-divergence as a sum of the separate parts
 \begin{align}
-	\mathbb{E}_{\psi, \mathbf{z}}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right] 
-	=& \mathbb{E}_{\psi, \mathbf{z}}[p(\mathbf{W})p(\mathbf{X}\mid\mathbf{Z},\mathbf{W},\mathbf{\Psi})p(\mathbf{Z})p(\mathbf{\Psi})]\\
-	\propto&\mathbb{E}_{\psi, \mathbf{z}}[p(\mathbf{W})p(\mathbf{X}\mid\mathbf{Z},\mathbf{W},\mathbf{\Psi})] \\
-	\propto&\mathbb{E}_{\psi, \mathbf{z}}[ \sum_{n=1}^{N}\log\left( \mathcal{N}(\mathbf{x}_{nd} \mid \mathbf{w}_d^\top \mathbf{z}_{n},\mathbf{\psi}_d^{-1})\right) +  \log\left(\mathcal{N}_{K}(\mathbf{w}_d\mid\mathbf{0,}\alpha\mathbf{I})\right)] \\
-	\log\left( \mathcal{N}(\mathbf{x}_{nd} \mid \mathbf{w}_d^\top \mathbf{z}_{n},\mathbf{\psi}_d^{-1})\right) \propto& -\frac{1}{2}(\mathbf{x}_{nd} -\mathbf{w}_d^\top\mathbf{z}_{n})^\top\mathbf{\psi_d}(\mathbf{x}_{nd} -\mathbf{w}_d^\top\mathbf{z}_{n}) \\
-	\log\left( \mathcal{N}_{K}(\mathbf{z}_n\mid \mathbf{0,I})\right)  \propto& -\frac{1}{2} \mathbf{w_d}^\top(\alpha^{-1}\mathbf{I})\mathbf{w_d} \\
-	\mathbb{E}_{\psi, \mathbf{z}}\left[ \log q^*(\psi, \mathbf{Z}, \mathbf{W}, \mathbf{X})\right] \propto& \mathbb{E}_{\psi, \mathbf{z}}\left[\sum_{n=1}^{N}\left(-\frac{1}{2}(\mathbf{x}_{nd}-\mathbf{w}_d^\top\mathbf{z}_{n})^\top\mathbf{\psi_d}(\mathbf{x}_{nd} -\mathbf{w}_d^\top\mathbf{z}_{n})\right)-\frac{1}{2} \mathbf{w_d}^\top(\alpha^{-1}\mathbf{I})\mathbf{w_d} \right] \\
-	\propto& \mathbb{E}_{\psi, \mathbf{z}}\left[\sum_{n=1}^{N}\left(-\frac{\psi_d}{2}(\mathbf{x}_{nd}^2-2\mathbf{x}_{nd}\mathbf{w}_d^\top\mathbf{z}_{n}+\mathbf{w}_d^\top\mathbf{z}_{n}\mathbf{z}_{n}^\top\mathbf{w}_d)\right)-\frac{1}{2} \mathbf{w_d}^\top(\alpha^{-1}\mathbf{I})\mathbf{w_d} \right] \\
-	\propto& \mathbb{E}_{\psi, \mathbf{z}}\left[\sum_{n=1}^{N}\left(\psi_d\mathbf{x}_{nd}\mathbf{w}_d^\top\mathbf{z}_{n}-\frac{\psi_d}{2}\mathbf{w}_d^\top\mathbf{z}_{n}\mathbf{z}_{n}^\top\mathbf{w}_d\right)-\frac{1}{2} \mathbf{w_d}^\top(\alpha^{-1}\mathbf{I})\mathbf{w_d} \right] \\
-	\propto& \mathbb{E}_{\psi, \mathbf{z}}\left[\psi_d\mathbf{w}_d^\top\sum_{n=1}^{N}\mathbf{x}_{nd}\mathbf{z}_{n}-\frac{\psi_d}{2}\mathbf{w}_d^\top\sum_{n=1}^{N}\left( \mathbf{z}_{n}\mathbf{z}_{n}^\top\right) \mathbf{w}_d-\frac{1}{2} \mathbf{w_d}^\top(\alpha^{-1}\mathbf{I})\mathbf{w_d} \right] \\
-	\propto& \mathbb{E}_{\psi, \mathbf{z}}\left[\psi_d\mathbf{w}_d^\top\sum_{n=1}^{N}\mathbf{x}_{nd}\mathbf{z}_{n}-\frac{1}{2}\mathbf{w}_d^\top\left( \psi_d\sum_{n=1}^{N}\left( \mathbf{z}_{n}\mathbf{z}_{n}^\top\right)  + \alpha^{-1}\mathbf{I}\right) \mathbf{w_d} \right] \\
-	\propto& \mathbb{E}_{\psi}[\psi_d]\sum_{n=1}^{N}(\mathbf{x}_{nd}\mathbb{E}_{\mathbf{z}}[\mathbf{z}_{n}^\top])\mathbf{w}_d-\frac{1}{2}\mathbf{w}_d^\top\left(\mathbb{E}_{\psi} [\psi_d]\sum_{n=1}^{N} \mathbb{E}_{\mathbf{z}}[\mathbf{z}_{n}\mathbf{z}_{n}^\top]+ \alpha^{-1}\mathbf{I}\right) \mathbf{w_d} \\
-	\propto& \underbrace{\left\langle \psi_d\right\rangle \sum_{n=1}^{N}(\mathbf{x}_{nd}\left\langle \mathbf{z}_{n}^\top\right\rangle )}_{\mathbf{b}^\top}\mathbf{w}_d-\frac{1}{2}\mathbf{w}_d^\top\underbrace{\left( \left\langle \psi_d\right\rangle \sum_{n=1}^{N} \left\langle \mathbf{z}_{n}\mathbf{z}_{n}^\top\right\rangle + \alpha^{-1}\mathbf{I}\right)}_{\mathbf{A}} \mathbf{w_d} \\
-	& \text{Complete the square}\\\
-	\propto & -\frac{1}{2}\left( \mathbf{w_d} - \mathbf{A}^{-1}\mathbf{b}\right) ^\top \mathbf{A}\left( \mathbf{w_d} - \mathbf{A}^{-1}\mathbf{b}\right)\\
-	\text{So we can conclude that}\\
-	\propto& \mathcal{N}_K(\mathbf{w_d} \mid \mathbf{A}^{-1}\mathbf{b}, \mathbf{A}^{-1})\\
+	\text{KL}\left[q(\mathbf{w})| p(\mathbf{w})\right]) &= \text{KL}_0\left[q(w_0)| p(w_0)\right]) + \text{KL}_1\left[q(w_1)| p(w_1)\right]) \\
+	\text{KL}_i[q(w_i)\mid p(w_i)] =& \int -q(w_i) \log\frac{p(w_i)}{q(w_i)} dw_i \\
+	=& \int q(w_i) \log q(w_i) dw_i - \int q(w_i) \log p(w_i) dw_i \\
+	q(w_i) =& \mathcal{N}(w_i | \mu_i,\sigma_i^2) \propto \exp(-\frac{1}{2\sigma_i^2}(w_i-\mu_i)^2) \\
+	\log q(w_i) \propto& -\frac{1}{2\sigma_i^2}(w_i-\mu_i)^2 \\
+	p(w_i) =& \mathcal{N}(w_i | 0,\alpha) \propto \exp(-\frac{1}{2\alpha^2}w_i^2)\\
+	\log p(w_i) =& -\frac{1}{2\alpha^2}w_i^2 \\
+	\text{KL}_i[q(w_i)\mid p(w_i)] \propto& \int \exp(-\frac{1}{2\sigma_i^2}(w_i-\mu_i)^2)  -\frac{1}{2\sigma_i^2}(w_i-\mu_i)^2 dw_i \\-& \int \exp(-\frac{1}{2\sigma_i^2}(w_i-\mu_i)^2) -\frac{1}{2\alpha^2}w_i^2 dw_i \\
+	=& \int -\frac{1}{2\sigma_i^2}(w_i-\mu_i)^2 dw_i  +\int  \frac{1}{2\alpha^2}w_i^2 dw_i \\
+	=& \int -\frac{1}{2\sigma_i^2}(w_i-\mu_i)^2  +  \frac{1}{2\alpha^2}w_i^2 dw_i \\
+	=& \frac{1}{2}\int -\frac{1}{\sigma_i^2}(w_i-\mu_i)^2  +  \frac{1}{\alpha^2}w_i^2 dw_i \\
 \end{align}
 \end{document}
 
