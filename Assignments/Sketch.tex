@@ -34,16 +34,19 @@ Since the prior $p(\mathbf{w})$ is a MVN with diagonal covariance and that the m
 \begin{align}
 	\text{KL}\left[q(\mathbf{w})| p(\mathbf{w})\right]) &= \text{KL}_0\left[q(w_0)| p(w_0)\right]) + \text{KL}_1\left[q(w_1)| p(w_1)\right]) \\
 	\text{KL}_i[q(w_i)\mid p(w_i)] =& \int -q(w_i) \log\frac{p(w_i)}{q(w_i)} dw_i \\
-	=& \underbrace{\int q(w_i) \log q(w_i) dw_i}_{\text{entropy} = \frac{1}{2}\log(2\pi\sigma_i^2)+\frac{1}{2}} - \int q(w_i) \log p(w_i) dw_i \\
+	=& \underbrace{\int q(w_i) \log q(w_i) dw_i}_{\text{entropy} = -\frac{1}{2}\log(2\pi\sigma_i^2)-\frac{1}{2}} - \int q(w_i) \log p(w_i) dw_i \\
 	q(w_i) =& \mathcal{N}(w_i | \mu_i,\sigma_i^2) = \frac{1}{\sigma_i \sqrt{2\pi}}\exp(-\frac{1}{2\sigma_i^2}(w_i-\mu_i)^2), \qquad \sigma_i \geq 0 \\
 	%\log q(w_i) =&-\log(\sigma_i \sqrt{2\pi}) -\frac{1}{2\sigma_i^2}(w_i-\mu_i)^2 \\
 	p(w_i) =& \mathcal{N}(w_i | 0,\alpha) =\frac{1}{\alpha \sqrt{2\pi}} \exp(-\frac{1}{2\alpha^2}w_i^2) , \qquad \alpha \geq 0\\
 	\log p(w_i) =&-\log(\alpha \sqrt{2\pi}) -\frac{1}{2\alpha^2}w_i^2 \\
-	\text{KL}_i[q(w_i)\mid p(w_i)] =& \frac{1}{2}\log(2\pi\sigma_i^2)+\frac{1}{2}- \int q(w_i) \log p(w_i) dw_i \\
-	\text{KL}_i[q(w_i)\mid p(w_i)] =& \frac{1}{2}\log(2\pi\sigma_i^2)+\frac{1}{2}- \int \mathcal{N}(w_i | \mu_i,\sigma_i^2) \left(  -\log(\alpha \sqrt{2\pi}) -\frac{1}{2\alpha^2}w_i^2\right)  dw_i \\
-	=& \frac{1}{2}\log(2\pi\sigma_i^2)+\frac{1}{2} + \log(\alpha \sqrt{2\pi})\underbrace{\int \mathcal{N}(w_i | \mu_i,\sigma_i^2)dw_i}_{=1} +\frac{1}{2\alpha^2}\int \mathcal{N}(w_i | \mu_i,\sigma_i^2)w_i^2  dw_i \\
-	=& \frac{1}{2}\log(2\pi\sigma_i^2)+\frac{1}{2} + \log(\alpha \sqrt{2\pi}) +\frac{1}{2\alpha^2}\underbrace{\int \frac{1}{\sigma_i \sqrt{2\pi}}\exp(-\frac{1}{2\sigma_i^2}(w_i-\mu_i)^2)w_i^2  dw_i}_{\mu^2+\sigma_i^2} \\
-	=& \frac{1}{2}\log(2\pi\sigma_i^2)+\frac{1}{2} + \log(\alpha \sqrt{2\pi}) +\frac{\mu^2+\sigma_i^2}{2\alpha^2}  \\
+	\text{KL}_i[q(w_i)\mid p(w_i)] =& -\frac{1}{2}\log(2\pi\sigma_i^2)-\frac{1}{2}- \int q(w_i) \log p(w_i) dw_i \\
+	\text{KL}_i[q(w_i)\mid p(w_i)] =& -\frac{1}{2}\log(2\pi\sigma_i^2)-\frac{1}{2}- \int \mathcal{N}(w_i | \mu_i,\sigma_i^2) \left(  -\log(\alpha \sqrt{2\pi}) -\frac{1}{2\alpha^2}w_i^2\right)  dw_i \\
+	=& -\frac{1}{2}\log(2\pi\sigma_i^2)-\frac{1}{2} + \log(\alpha \sqrt{2\pi})\underbrace{\int \mathcal{N}(w_i | \mu_i,\sigma_i^2)dw_i}_{=1} +\frac{1}{2\alpha^2}\int \mathcal{N}(w_i | \mu_i,\sigma_i^2)w_i^2  dw_i \\
+	=& -\frac{1}{2}\log(2\pi\sigma_i^2)-\frac{1}{2} + \log(\alpha \sqrt{2\pi}) +\frac{1}{2\alpha^2}\underbrace{\int \frac{1}{\sigma_i \sqrt{2\pi}}\exp(-\frac{1}{2\sigma_i^2}(w_i-\mu_i)^2)w_i^2  dw_i}_{\mu_i^2+\sigma_i^2} \\
+	=& -\frac{1}{2}\log(2\pi\sigma_i^2)-\frac{1}{2} + \log(\alpha \sqrt{2\pi}) +\frac{\mu_i^2+\sigma_i^2}{2\alpha^2} \\
+	=& -\frac{1}{2}\log(2\pi\sigma_i^2)-\frac{1}{2} + \frac{1}{2}\log( 2\pi \alpha^2) +\frac{\mu_i^2+\sigma_i^2}{2\alpha^2}  \\
+	=& -\frac{1}{2}\log(2\pi\sigma_i^2)-\frac{1}{2} + \frac{1}{2}\log( 2\pi \alpha^2) +\frac{\mu_i^2+\sigma_i^2}{2\alpha^2}  \\
+	=& -\frac{1}{2} + \log(\frac{\alpha}{\sigma_i}) +\frac{\mu_i^2+\sigma_i^2}{2\alpha^2}  \\
 \end{align}
 \end{document}
 
